@@ -113,7 +113,7 @@ class JustUsGirlsScreen extends StatelessWidget {
                       top: 8,
                       right: 8,
                       child: CircleAvatar(
-                        backgroundColor: blackColor, // Black circle background
+                        backgroundColor: blackColor,
                         child: Icon(Icons.favorite, color: redColor),
                       ),
                     ),
