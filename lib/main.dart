@@ -40,7 +40,7 @@ class JustUsGirlsScreen extends StatelessWidget {
             Icon(
               Icons.search,
               color: lilacColor,
-            ),
+            ), // Changed to search icon only
           ],
         ),
       ),
@@ -49,6 +49,7 @@ class JustUsGirlsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Row with All Shows, YouTube, Live Stream, Web Series, Streams
             Row(
               children: [
                 Text(
@@ -92,9 +93,10 @@ class JustUsGirlsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
+            // Horizontal Scrollable Favorite List
             // ignore: sized_box_for_whitespace
             Container(
-              height: 180,
+              height: 180, // Increased height to make boxes taller
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: 5,
@@ -102,8 +104,8 @@ class JustUsGirlsScreen extends StatelessWidget {
                 itemBuilder: (context, index) => Stack(
                   children: [
                     Container(
-                      width: 150,
-                      height: 180,
+                      width: 150, // Adjusted width for longer boxes
+                      height: 180, // Adjusted height for longer boxes
                       decoration: BoxDecoration(
                         color: lilacColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(8),
@@ -113,7 +115,7 @@ class JustUsGirlsScreen extends StatelessWidget {
                       top: 8,
                       right: 8,
                       child: CircleAvatar(
-                        backgroundColor: blackColor,
+                        backgroundColor: blackColor, // Black circle background
                         child: Icon(Icons.favorite, color: redColor),
                       ),
                     ),
@@ -123,6 +125,7 @@ class JustUsGirlsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
+            // Dot Progress Indicator below first row of boxes
             Center(
               // ignore: sized_box_for_whitespace
               child: Container(
@@ -145,6 +148,7 @@ class JustUsGirlsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
+            // Worship row with See All
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -160,15 +164,16 @@ class JustUsGirlsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
+            // Horizontal Scrollable Worship List
             // ignore: sized_box_for_whitespace
             Container(
-              height: 180,
+              height: 180, // Increased height for worship boxes
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: 5,
                 separatorBuilder: (context, index) => const SizedBox(width: 10),
                 itemBuilder: (context, index) => Container(
-                  width: 150,
+                  width: 150, // Increased width for worship boxes
                   height: 180,
                   decoration: BoxDecoration(
                     color: lilacColor.withOpacity(0.1),
@@ -180,6 +185,7 @@ class JustUsGirlsScreen extends StatelessWidget {
           ],
         ),
       ),
+      // Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: lilacColor,
         unselectedItemColor: lilacColor.withOpacity(0.6),
