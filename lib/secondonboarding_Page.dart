@@ -1,3 +1,4 @@
+import 'package:first_try/ui/homescreen_page.dart';
 import 'package:flutter/material.dart';
 
 class SecondOnboardingPage extends StatelessWidget {
@@ -83,8 +84,7 @@ class SecondOnboardingPage extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const SecondOnboardingPage()),
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
                   );
                 },
                 child: const Align(

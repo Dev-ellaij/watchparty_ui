@@ -1,5 +1,9 @@
+import 'package:first_try/ui/chatscreen_page.dart';
+import 'package:first_try/ui/profilepage.dart';
+import 'package:first_try/ui/videoscreen_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http; // Corrected import statement
 
 // ignore: use_key_in_widget_constructors
@@ -17,6 +21,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<dynamic> videos = [];
 
+  int _selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +39,43 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       // ignore: avoid_print
       print('Error fetching videos: $e');
+    }
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    // Navigate based on the selected index
+    switch (index) {
+      case 0:
+        // Navigate to Home (Already here)
+        break;
+      case 1:
+        // Handle Video Call navigation
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const VideoScreen(
+                    videoId: '',
+                  )),
+        );
+        break;
+      case 2:
+        // Handle Chat navigation
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ChatScreen()),
+        );
+        break;
+      case 3:
+        // Handle Profile navigation
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ProfileScreen()),
+        );
+        break;
     }
   }
 
@@ -95,7 +138,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             const SizedBox(height: 20),
-            // Displaying YouTube Videos
             Expanded(
               child: videos.isEmpty
                   ? const Center(child: CircularProgressIndicator())
@@ -108,9 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               video['snippet']['thumbnails']['default']['url']),
                           title: Text(video['snippet']['title']),
                           subtitle: Text(video['snippet']['description']),
-                          onTap: () {
-                            // Navigate to video player or details
-                          },
+                          onTap: () {},
                         );
                       },
                     ),
@@ -122,18 +162,20 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedItemColor: lilacColor,
         unselectedItemColor: lilacColor.withOpacity(0.6),
         backgroundColor: whiteColor,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.play_arrow),
-            label: 'Play',
+            icon: Icon(Icons.video_call),
+            label: 'Video Call',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
+            icon: Icon(Icons.chat),
+            label: 'Chat',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -146,9 +188,8 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class YouTubeService {
-  final String apiKey =
-      'AIzaSyA26dmfwUUEqI1tT1ahpuogDk5eFWSLCRw'; // Your API Key
-  final String channelId = 'gXSXj0W_8j8'; // Your Channel ID
+  final String apiKey = 'AIzaSyA26dmfwUUEqI1tT1ahpuogDk5eFWSLCRw';
+  final String channelId = 'gXSXj0W_8j8';
 
   Future<List<dynamic>> fetchVideos() async {
     final String apiUrl =
