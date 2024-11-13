@@ -1,13 +1,14 @@
+import 'package:first_try/page/callpage.dart';
+import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:first_try/ui/chatscreen_page.dart';
 import 'package:first_try/ui/profilepage.dart';
-import 'package:first_try/ui/videoscreen_page.dart';
-import 'package:flutter/material.dart';
-import 'dart:convert';
-// ignore: depend_on_referenced_packages
-import 'package:http/http.dart' as http; // Corrected import statement
 
-// ignore: use_key_in_widget_constructors
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
@@ -15,9 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final Color lilacColor = const Color(0xFFC8A2C8);
-  final Color redColor = Colors.red;
   final Color whiteColor = Colors.white;
-  final Color blackColor = Colors.black;
 
   List<dynamic> videos = [];
 
@@ -37,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
         videos = fetchedVideos;
       });
     } catch (e) {
-      // ignore: avoid_print
       print('Error fetching videos: $e');
     }
   }
@@ -47,30 +45,23 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedIndex = index;
     });
 
-    // Navigate based on the selected index
     switch (index) {
       case 0:
-        // Navigate to Home (Already here)
-        break;
+        break; // Already on HomeScreen
       case 1:
-        // Handle Video Call navigation
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => const VideoScreen(
-                    videoId: '',
-                  )),
+              builder: (context) => const CallPage(videoId: '', callId: '')),
         );
         break;
       case 2:
-        // Handle Chat navigation
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ChatScreen()),
         );
         break;
       case 3:
-        // Handle Profile navigation
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const ProfileScreen()),
@@ -108,22 +99,13 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Row(
               children: [
-                Text(
-                  'All shows',
-                  style: TextStyle(color: lilacColor),
-                ),
+                Text('All shows', style: TextStyle(color: lilacColor)),
                 const SizedBox(width: 10),
-                Text(
-                  'YouTube',
-                  style: TextStyle(color: lilacColor),
-                ),
+                Text('YouTube', style: TextStyle(color: lilacColor)),
                 const SizedBox(width: 10),
                 Row(
                   children: [
-                    Text(
-                      'Live Stream',
-                      style: TextStyle(color: lilacColor),
-                    ),
+                    Text('Live Stream', style: TextStyle(color: lilacColor)),
                     const SizedBox(width: 5),
                     Container(
                       height: 8,
@@ -150,7 +132,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               video['snippet']['thumbnails']['default']['url']),
                           title: Text(video['snippet']['title']),
                           subtitle: Text(video['snippet']['description']),
-                          onTap: () {},
+                          onTap: () {
+                            String videoId = video['id']['videoId'];
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    YouTubePlayerScreen(videoId: videoId),
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
@@ -187,9 +178,41 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+class YouTubePlayerScreen extends StatelessWidget {
+  final String videoId;
+
+  const YouTubePlayerScreen({Key? key, required this.videoId})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    YoutubePlayerController _controller = YoutubePlayerController(
+      initialVideoId: videoId,
+      flags: const YoutubePlayerFlags(
+        autoPlay: true,
+        mute: false,
+      ),
+    );
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Now Playing'),
+      ),
+      body: YoutubePlayer(
+        controller: _controller,
+        showVideoProgressIndicator: true,
+        progressColors: const ProgressBarColors(
+          playedColor: Colors.red,
+          handleColor: Colors.redAccent,
+        ),
+      ),
+    );
+  }
+}
+
 class YouTubeService {
-  final String apiKey = 'AIzaSyA26dmfwUUEqI1tT1ahpuogDk5eFWSLCRw';
-  final String channelId = 'gXSXj0W_8j8';
+  final String apiKey = 'YOUR_API_KEY';
+  final String channelId = 'YOUR_CHANNEL_ID';
 
   Future<List<dynamic>> fetchVideos() async {
     final String apiUrl =

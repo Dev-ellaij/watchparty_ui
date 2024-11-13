@@ -1,5 +1,8 @@
 // widgets/video_info_widget.dart
 
+import 'dart:ui_web';
+
+import 'package:first_try/ui/youtube_player_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/video_model.dart';
 

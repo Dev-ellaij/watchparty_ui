@@ -1,16 +1,31 @@
+import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:first_try/widgets/channel_infowidgets.dart';
 import 'package:first_try/widgets/video_actionsbutton.dart';
 import 'package:first_try/widgets/video_infowidgets.dart';
 import 'package:first_try/widgets/yotube_playerwidget.dart';
-import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../models/video_model.dart';
+
+class Video {
+  final String videoId;
+  final String title;
+  final DateTime uploadTime;
+  final int views;
+  final String channelName;
+
+  Video({
+    required this.videoId,
+    required this.title,
+    required this.uploadTime,
+    required this.views,
+    required this.channelName,
+  });
+}
 
 class YouTubePlayerScreen extends StatefulWidget {
   final Video video;
 
-  // ignore: use_super_parameters
-  const YouTubePlayerScreen({Key? key, required this.video}) : super(key: key);
+  const YouTubePlayerScreen({super.key, required this.video});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -21,13 +36,14 @@ class _YouTubePlayerScreenState extends State<YouTubePlayerScreen> {
   late YoutubePlayerController _controller;
 
   final Color lilacColor = const Color(0xFFC8A2C8);
-  final Color whiteColor = Colors.white;
+  final Color whiteColor = const Color.fromARGB(255, 36, 27, 36);
 
   @override
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: widget.video.videoId,
+      initialVideoId:
+          widget.video.videoId, // Ensure this is a valid non-null string
       flags: const YoutubePlayerFlags(autoPlay: true, mute: false),
     );
   }
@@ -65,7 +81,9 @@ class _YouTubePlayerScreenState extends State<YouTubePlayerScreen> {
           YouTubePlayerWidget(controller: _controller, lilacColor: lilacColor),
           VideoInfoWidget(video: widget.video, lilacColor: lilacColor),
           VideoActionButtons(lilacColor: lilacColor),
-          ChannelInfoWidget(video: widget.video),
+          // Pass the full video object here
+          ChannelInfoWidget(
+              video: widget.video), // No need for extra channelName parameter
         ],
       ),
     );

@@ -9,9 +9,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  http: ^1.2.2
   image_picker: ^1.1.2
+  webview_flutter: ^4.10.0
   youtube_player_flutter: ^9.0.3
-  jitsi_meet: ^4.0.0  
+  zego_uikit_prebuilt_call: ^4.16.12
+
 
 dev_dependencies:
   flutter_test:
