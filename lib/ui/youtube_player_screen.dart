@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:watchparty_ui/widgets/channel_infowidgets.dart';
+import 'package:watchparty_ui/widgets/video_actionsbutton.dart';
+import 'package:watchparty_ui/widgets/video_infowidgets.dart';
+import 'package:watchparty_ui/widgets/yotube_playerwidget.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:first_try/widgets/channel_infowidgets.dart';
-import 'package:first_try/widgets/video_actionsbutton.dart';
-import 'package:first_try/widgets/video_infowidgets.dart';
-import 'package:first_try/widgets/yotube_playerwidget.dart';
-import '../models/video_model.dart';
 
 class Video {
   final String videoId;

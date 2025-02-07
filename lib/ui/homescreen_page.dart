@@ -1,10 +1,10 @@
-import 'package:first_try/page/callpage.dart';
 import 'package:flutter/material.dart';
+import 'package:watchparty_ui/page/callpage.dart';
+import 'package:watchparty_ui/ui/chatscreen_page.dart';
+import 'package:watchparty_ui/ui/profilepage.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:first_try/ui/chatscreen_page.dart';
-import 'package:first_try/ui/profilepage.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

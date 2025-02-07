@@ -1,10 +1,10 @@
-name: first_try
+name: watchparty_ui
 description: "A new Flutter project."
 publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ^3.5.1
+  sdk: ">=3.5.4 <4.0.0"
 
 dependencies:
   flutter:
@@ -15,7 +15,6 @@ dependencies:
   youtube_player_flutter: ^9.0.3
   zego_uikit_prebuilt_call: ^4.16.12
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -23,3 +22,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
