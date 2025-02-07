@@ -10,7 +10,6 @@ class SecondOnboardingPage extends StatelessWidget {
       home: Scaffold(
         backgroundColor: const Color(0xFFED7EFF),
         body: GestureDetector(
-          // Navigate to HomeScreen when the page is tapped
           onTap: () {
             Navigator.push(
               context,
@@ -30,8 +29,7 @@ class SecondOnboardingPage extends StatelessWidget {
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          Image.asset(
-                              'assets/image1.png'), // Replace with your image asset path
+                          Image.asset('assets/Rectangle 1.png'),
                           const Positioned(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -76,14 +74,14 @@ class SecondOnboardingPage extends StatelessWidget {
                     );
                   },
                 ),
-                const SizedBox(height: 20), // Adjust the gap between images
+                const SizedBox(height: 20),
                 TweenAnimationBuilder(
                   tween: Tween<double>(begin: 0, end: 1),
                   duration: const Duration(seconds: 2),
                   builder: (context, double opacity, child) {
                     return Opacity(
                       opacity: opacity,
-                      child: Image.asset('assets/image2.png'),
+                      child: Image.asset('assets/ballontail.png'),
                     );
                   },
                 ),

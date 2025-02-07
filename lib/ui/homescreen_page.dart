@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case 3:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ProfileScreen()),
+          MaterialPageRoute(builder: (context) => ProfileScreen()),
         );
         break;
     }
@@ -211,7 +211,7 @@ class YouTubePlayerScreen extends StatelessWidget {
 }
 
 class YouTubeService {
-  final String apiKey = 'YOUR_API_KEY';
+  final String apiKey = 'AIzaSyA26dmfwUUEqI1tT1ahpuogDk5eFWSLCRw';
   final String channelId = 'YOUR_CHANNEL_ID';
 
   Future<List<dynamic>> fetchVideos() async {

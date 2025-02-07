@@ -1,52 +1,45 @@
-import 'dart:io'; // Import for handling File
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart'; // Import for image picker
 
+// ignore: use_key_in_widget_constructors
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
-
   @override
   // ignore: library_private_types_in_public_api
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  XFile? _backgroundImage; // XFile is now recognized
-  XFile? _avatarImage;
-  final ImagePicker _picker = ImagePicker(); // Image picker instance
+  File? _avatarImage;
+  final lilac = const Color(0xFFC8A2C8);
+  final avatarPlaceholderUrl = 'https://via.placeholder.com/150';
 
-  // Define the custom color
-  final Color lilac = const Color(0xFFED7EFF); // Your specific lilac color
-
-  // Placeholder network URLs
-  final String backgroundPlaceholderUrl =
-      'https://example.com/placeholder_background.jpg';
-  final String avatarPlaceholderUrl =
-      'https://example.com/placeholder_avatar.png';
-
-  Future<void> _pickBackgroundImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() {
-        _backgroundImage = image;
-      });
-    }
+  void _pickAvatarImage() {
+    // TODO: Implement avatar image picker
   }
 
-  Future<void> _pickAvatarImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() {
-        _avatarImage = image;
-      });
-    }
+  void _pickBackgroundImage() {
+    // TODO: Implement background image picker
+  }
+
+  Widget _buildListTile({
+    required IconData icon,
+    required String text,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: color),
+      title: Text(text, style: const TextStyle(fontSize: 16)),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+      onTap: onTap,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile", style: TextStyle(color: Colors.black)),
+        title: Text("Profile", style: TextStyle(color: lilac)),
         backgroundColor: Colors.white,
         elevation: 0,
         leading: GestureDetector(
@@ -58,20 +51,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           Stack(
             children: [
-              // Display the network URL background image or the user's selected image
-              _backgroundImage != null
-                  ? Image.file(
-                      File(_backgroundImage!.path), // Use File from dart:io
-                      width: double.infinity,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    )
-                  : Image.network(
-                      backgroundPlaceholderUrl, // Network placeholder image
-                      width: double.infinity,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    ),
+              Container(
+                width: double.infinity,
+                height: 200,
+                color: lilac,
+              ),
               Positioned(
                 top: 120,
                 left: MediaQuery.of(context).size.width / 2 - 50,
@@ -81,13 +65,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     radius: 50,
                     backgroundColor: Colors.white,
                     backgroundImage: _avatarImage != null
-                        ? FileImage(
-                            File(_avatarImage!.path)) // Use File from dart:io
-                        : NetworkImage(
-                            avatarPlaceholderUrl), // Network placeholder avatar image
+                        ? FileImage(_avatarImage!)
+                        : NetworkImage(avatarPlaceholderUrl),
                     child: _avatarImage == null
-                        ? const Icon(Icons.person,
-                            size: 50) // Fallback icon if no avatar is selected
+                        ? const Icon(Icons.person, size: 50)
                         : null,
                   ),
                 ),
@@ -116,72 +97,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(height: 20),
-          GestureDetector(
+          _buildListTile(
+            icon: Icons.edit,
+            text: "Edit Profile",
+            color: lilac,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EditProfilePage()),
-              );
+              // Navigate to Edit Profile page
             },
-            child: _buildListTile(
-                icon: Icons.edit, text: "Edit Profile", color: lilac),
           ),
-          GestureDetector(
+          _buildListTile(
+            icon: Icons.people,
+            text: "Friends",
+            color: lilac,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const FriendsPage()),
-              );
+              // Navigate to Friends page
             },
-            child: _buildListTile(
-                icon: Icons.people, text: "Friends", color: lilac),
           ),
-          GestureDetector(
+          _buildListTile(
+            icon: Icons.lock,
+            text: "Change Password",
+            color: lilac,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ChangePasswordPage()),
-              );
+              // Navigate to Change Password page
             },
-            child: _buildListTile(
-                icon: Icons.lock, text: "Change Password", color: lilac),
           ),
-          GestureDetector(
+          _buildListTile(
+            icon: Icons.settings,
+            text: "Settings",
+            color: lilac,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SettingsPage()),
-              );
+              // Navigate to Settings page
             },
-            child: _buildListTile(
-                icon: Icons.settings, text: "Settings", color: lilac),
           ),
-          GestureDetector(
+          _buildListTile(
+            icon: Icons.info,
+            text: "About",
+            color: lilac,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AboutPage()),
-              );
+              // Navigate to About page
             },
-            child:
-                _buildListTile(icon: Icons.info, text: "About", color: lilac),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ChangePasswordPage()),
-              );
-            },
-            child: _buildListTile(
-                icon: Icons.lock, text: "Change Password", color: Colors.red),
           ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3, // Set the index for ProfileScreen
+        currentIndex: 3,
         onTap: (index) {
           switch (index) {
             case 0:
@@ -194,12 +153,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Navigator.pushReplacementNamed(context, '/notifications');
               break;
             case 3:
-              // Stay on the Profile screen
               break;
           }
         },
         type: BottomNavigationBarType.fixed,
-        backgroundColor: lilac, // Use lilac for the bottom nav bar
+        backgroundColor: lilac,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.play_arrow), label: 'Play'),
@@ -207,94 +165,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icon(Icons.notifications), label: 'Notifications'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
-        selectedItemColor: Colors.white, // Color of the selected item
-        unselectedItemColor: Colors.black, // Color of the unselected items
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.white,
       ),
-    );
-  }
-
-  ListTile _buildListTile(
-      {required IconData icon, required String text, required Color color}) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: color,
-        child: Icon(icon, color: Colors.white),
-      ),
-      title: Text(text),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 10,
-            height: 10,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-            ),
-          ),
-          Icon(Icons.arrow_back, color: color),
-        ],
-      ),
-    );
-  }
-}
-
-// Example Pages
-// ignore: use_key_in_widget_constructors
-class EditProfilePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Edit Profile')),
-      body: const Center(child: Text('Edit Profile Page')),
-    );
-  }
-}
-
-class FriendsPage extends StatelessWidget {
-  const FriendsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Friends')),
-      body: const Center(child: Text('Friends Page')),
-    );
-  }
-}
-
-class ChangePasswordPage extends StatelessWidget {
-  const ChangePasswordPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Change Password')),
-      body: const Center(child: Text('Change Password Page')),
-    );
-  }
-}
-
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
-      body: const Center(child: Text('Settings Page')),
-    );
-  }
-}
-
-class AboutPage extends StatelessWidget {
-  const AboutPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('About')),
-      body: const Center(child: Text('About Page')),
     );
   }
 }

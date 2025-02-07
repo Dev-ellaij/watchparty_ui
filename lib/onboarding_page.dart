@@ -9,7 +9,6 @@ class OnboardingPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: GestureDetector(
-        // Navigate to the next page on tap
         onTap: () {
           Navigator.push(
             context,
@@ -20,7 +19,6 @@ class OnboardingPage extends StatelessWidget {
         },
         child: Center(
           child: SingleChildScrollView(
-            // Prevent overflow
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -33,8 +31,7 @@ class OnboardingPage extends StatelessWidget {
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          Image.asset(
-                              '/Users/apple/Documents/watchparty_ui/lib/assets/Rectangle 1.png'),
+                          Image.asset('assets/Rectangle 1.png'),
                           const Positioned.fill(
                             child: Center(
                               child: Column(
@@ -88,7 +85,7 @@ class OnboardingPage extends StatelessWidget {
                   builder: (context, double opacity, child) {
                     return Opacity(
                       opacity: opacity,
-                      child: Image.asset('assets/Vector.png'),
+                      child: Image.asset('assets/ballontail.png'),
                     );
                   },
                 ),
